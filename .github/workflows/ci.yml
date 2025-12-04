@@ -12,12 +12,12 @@ jobs:
   perf-test:
     runs-on: ubuntu-24.04
     steps:
-      - run: apt update && apt install -y linux-tools-common linux-tools-generic
+      - run: sudo apt update && sudo apt install -y linux-tools-common linux-tools-generic
       - run: perf stat -e cycles,instructions date
   perf-record:
     runs-on: ubuntu-24.04
     steps:
-      - run: apt update && apt install -y linux-tools-common linux-tools-generic
+      - run: sudo apt update && sudo apt install -y linux-tools-common linux-tools-generic
       - run: perf record -j any,u date
       - run: perf script -i perf.data > out.perf
       - run: cat out.perf

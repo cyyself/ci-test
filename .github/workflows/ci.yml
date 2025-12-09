@@ -35,7 +35,7 @@ jobs:
       - name: Download and extract
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          wget https://github.com/DynamoRIO/dynamorio/releases/download/release_11.3.0-1/DynamoRIO-Linux-11.3.0.tar.gz -O - | tar -zxf
+          wget https://github.com/DynamoRIO/dynamorio/releases/download/release_11.3.0-1/DynamoRIO-Linux-11.3.0.tar.gz -O - | tar -zxf -
       
       - name: Run instruction count
         run: |

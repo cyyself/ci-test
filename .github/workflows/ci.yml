@@ -23,3 +23,21 @@ jobs:
       - run: perf record -j any,u date
       - run: perf script -i perf.data > out.perf
       - run: cat out.perf
+  dynamorio-instr-count:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CI_WORKLOADS }}
+          key: ${{ needs.fetch-workloads.outputs.release-url }}
+
+      - name: Download and extract
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          wget https://github.com/DynamoRIO/dynamorio/releases/download/release_11.3.0-1/DynamoRIO-Linux-11.3.0.tar.gz -O - | tar -zxf
+      
+      - name: Run instruction count
+        run: |
+            ./DynamoRIO-Linux-11.3.0-1/bin64/drrun -c ./DynamoRIO-Linux-11.3.0-1/samples/bin64/libinscount.so -- \
+            date
